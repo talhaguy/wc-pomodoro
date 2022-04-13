@@ -473,5 +473,13 @@
     //   "reviewCategory": "tools",
     //   "tags": ["tools"]
     // }
+    {
+      "packageName": "timer",
+      "projectFolder": "libraries/timer"
+    },
+    {
+      "packageName": "web-ui",
+      "projectFolder": "apps/web-ui"
+    }
   ]
 }

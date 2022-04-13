@@ -1,0 +1,14 @@
+{
+  "name": "timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "author": "Muhammad Talha",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}
