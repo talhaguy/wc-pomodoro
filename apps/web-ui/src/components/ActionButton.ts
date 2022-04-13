@@ -1,28 +1,49 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators";
+import { ifDefined } from "lit/directives/if-defined";
+import { SHARED_COMPONENT_STYLES } from "../style/component";
 
 @customElement("mt-action-button")
 export class ActionButton extends LitElement {
   @property({ type: Boolean })
-  disabled = false;
+  public disabled = false;
 
-  static override styles = css`
-    * {
-      box-sizing: border-box;
-    }
+  @property({ type: String })
+  public label = "";
 
-    .btn {
-      border: 1px solid black;
-      background-color: white;
-      padding: 20px;
-      cursor: pointer;
-    }
-  `;
+  @property({ type: String })
+  public imgUrl?: string;
+
+  static override styles = [
+    SHARED_COMPONENT_STYLES,
+    css`
+      .btn {
+        text-align: center;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background-color: var(--color-orange);
+        color: var(--color-white);
+        padding: 0;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 2px;
+        filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+      }
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    `,
+  ];
 
   override render() {
     return html`
-      <button class="btn" ?disabled=${this.disabled}>
-        <slot></slot>
+      <button class="btn" ?disabled=${this.disabled} aria-label=${this.label}>
+        <img src="${ifDefined(this.imgUrl)}" />
       </button>
     `;
   }
