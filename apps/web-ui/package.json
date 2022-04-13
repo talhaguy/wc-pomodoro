@@ -2,17 +2,19 @@
     "name": "web-ui",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
     "scripts": {
-      "build": "tsc --project tsconfig.json"
+      "build": "parcel build src/index.html --dist-dir dist",
+      "dev": "parcel serve src/index.html"
     },
     "author": "Muhammad Talha",
     "license": "ISC",
     "devDependencies": {
-      "typescript": "^4.6.3"
+      "typescript": "^4.6.3",
+      "parcel": "~2.4.1"
     },
     "dependencies": {
-      "timer": "workspace:*"
+      "timer": "workspace:*",
+      "lit": "~2.2.2",
+      "@swc/helpers": "~0.3.8"
     }
 }
-  
