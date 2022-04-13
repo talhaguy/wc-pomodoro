@@ -1,3 +1,3 @@
-import { greet } from "timer";
+import { createTimer } from "timer";
 
-console.log(greet("Talha"));
+console.log(createTimer());

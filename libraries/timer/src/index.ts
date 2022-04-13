@@ -1,3 +1,2 @@
-export function greet(name: string) {
-  return `Hello, ${name}!`;
-}
+export * from "./factory";
+export * from "./timer";
