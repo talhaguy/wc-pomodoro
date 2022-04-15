@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
       "build": "parcel build src/index.html --dist-dir dist",
-      "dev": "parcel serve src/index.html"
+      "dev": "parcel serve --no-cache src/index.html"
     },
     "author": "Muhammad Talha",
     "license": "ISC",
