@@ -47,11 +47,11 @@ export class App extends BaseSmartComponent {
 
   override render() {
     return html`
-      <mt-background intervalType="FOCUS">
+      <mt-layout intervalType="FOCUS">
         <mt-digital-clock seconds=${this._seconds}></mt-digital-clock>
         <mt-controls activeState=${this._activeState}></mt-controls>
         <mt-counter count=${3}></mt-counter>
-      </mt-background>
+      </mt-layout>
     `;
   }
 }

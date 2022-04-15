@@ -1,6 +1,6 @@
 import "./components/Provider";
 import "./components/App";
-import "./components/Background";
+import "./components/Layout";
 import "./components/DigitalClock";
 import "./components/ActionButton";
 import "./components/Controls";
