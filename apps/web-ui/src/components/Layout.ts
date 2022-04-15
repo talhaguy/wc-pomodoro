@@ -1,7 +1,7 @@
 import { html, css } from "lit";
 import { customElement, property } from "lit/decorators";
-import { BODY_MODIFIER_TOKEN } from "../context/body";
-import { BodyModifier } from "../services/body";
+import { BODY_MODIFIER_TOKEN } from "../context/bodyModifier";
+import { BodyModifier } from "../services/BodyModifier";
 import { BaseSmartComponent } from "./BaseSmartComponent";
 
 @customElement("mt-layout")
