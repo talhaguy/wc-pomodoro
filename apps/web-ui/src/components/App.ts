@@ -12,6 +12,9 @@ export class App extends BaseSmartComponent {
   @state()
   private _activeState = TimerActiveState.inactive;
 
+  @state()
+  private _intervalsCompleted = 0;
+
   private _timer!: Timer;
 
   private _onTick = (seconds: number) => {
@@ -20,6 +23,7 @@ export class App extends BaseSmartComponent {
 
   private _onTimerComplete = () => {
     this._seconds = 0;
+    this._intervalsCompleted += 1;
   };
 
   private _onActiveStateChange = (activeState: TimerActiveState) => {
@@ -50,7 +54,7 @@ export class App extends BaseSmartComponent {
       <mt-layout intervalType="FOCUS">
         <mt-digital-clock seconds=${this._seconds}></mt-digital-clock>
         <mt-controls activeState=${this._activeState}></mt-controls>
-        <mt-counter count=${3}></mt-counter>
+        <mt-counter count=${this._intervalsCompleted}></mt-counter>
       </mt-layout>
     `;
   }

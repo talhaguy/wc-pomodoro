@@ -31,7 +31,7 @@ export class Controls extends BaseSmartComponent {
         imgUrl=${playSvg}
         ?disabled=${this.activeState === TimerActiveState.active}
         @action-button-click=${() => {
-          this._timer.start(5000);
+          this._timer.start(5);
         }}
       ></mt-action-button>
       <mt-action-button

@@ -35,8 +35,11 @@ export class Timer {
 
       if (this._seconds >= until && this._intervalId !== null) {
         this._timerFns.clearInterval(this._intervalId);
+        this._intervalId = null;
+        this._seconds = 0;
         this._timerActiveState = TimerActiveState.inactive;
         this._runHandlers(TimerOnEvent.complete);
+        this._runHandlers(TimerOnEvent.activeStateChange);
       }
     }, 1000);
   }
