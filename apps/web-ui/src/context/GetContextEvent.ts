@@ -1,25 +1,16 @@
 export class GetContextEvent extends CustomEvent<{
-  token: string;
+  token: Symbol;
   value?: unknown;
 }> {
   public static readonly EVENT_NAME = "get-context";
 
-  constructor(private token: string, value: unknown = undefined) {
+  constructor(token: Symbol) {
     super(GetContextEvent.EVENT_NAME, {
       detail: {
         token,
-        value,
       },
       bubbles: true,
       composed: true,
     });
-  }
-
-  public getTokenValue<T>(): T {
-    const value = this.detail.value;
-    if (!value) {
-      throw new Error("No value for token " + this.token);
-    }
-    return value as T;
   }
 }

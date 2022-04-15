@@ -1,28 +1,15 @@
 import { LitElement, html } from "lit";
 import { GetContextEvent } from "../context/GetContextEvent";
 
-export class BaseProvider extends LitElement {
-  // TODO: use symbol instead of string
-  private _dependencies: Record<string, unknown> = {};
-  private _didAddContextListener = false;
-
-  constructor() {
-    super();
-
-    this.addEventListener(GetContextEvent.EVENT_NAME, (e) =>
-      this._handleGetContext(e as GetContextEvent)
-    );
-    this._didAddContextListener = true;
-  }
+export abstract class BaseProvider extends LitElement {
+  private _dependencies: Map<Symbol, unknown> = this.getContextValues();
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    if (!this._didAddContextListener) {
-      this.addEventListener(GetContextEvent.EVENT_NAME, (e) =>
-        this._handleGetContext(e as GetContextEvent)
-      );
-    }
+    this.addEventListener(GetContextEvent.EVENT_NAME, (e) =>
+      this._handleGetContext(e as GetContextEvent)
+    );
   }
 
   override disconnectedCallback(): void {
@@ -31,28 +18,20 @@ export class BaseProvider extends LitElement {
     this.removeEventListener(GetContextEvent.EVENT_NAME, (e) =>
       this._handleGetContext(e as GetContextEvent)
     );
-    this._didAddContextListener = false;
   }
 
   public override render() {
     return html`<slot></slot>`;
   }
 
-  public addContext(token: string, value: unknown) {
-    this._dependencies[token] = value;
-  }
-
-  public removeContext(token: string) {
-    delete this._dependencies[token];
-  }
-
   private _handleGetContext = (event: GetContextEvent) => {
     const { token } = event.detail;
-    const value = this._dependencies[token];
+    const value = this._dependencies.get(token);
     if (!value) {
-      console.warn("No value for token: ", token);
-      return;
+      throw new Error("No value for token " + token.toString());
     }
     event.detail.value = value;
   };
+
+  public abstract getContextValues(): Map<Symbol, unknown>;
 }
