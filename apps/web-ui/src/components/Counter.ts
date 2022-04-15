@@ -12,6 +12,7 @@ export class Counter extends LitElement {
         list-style-type: none;
         margin: 0;
         display: flex;
+        min-height: 15px;
       }
 
       li {

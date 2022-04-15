@@ -14,6 +14,15 @@ export class Layout extends BaseSmartComponent {
       justify-content: center;
       align-items: center;
     }
+
+    .slot {
+      display: flex;
+      justify-content: center;
+    }
+
+    .slot + .slot {
+      margin-top: 30px;
+    }
   `;
 
   @property({ type: String })
@@ -41,7 +50,15 @@ export class Layout extends BaseSmartComponent {
   override render() {
     return html`<div class="layout">
       <div>
-        <slot></slot>
+        <div class="slot">
+          <slot name="clock"></slot>
+        </div>
+        <div class="slot">
+          <slot name="controls"></slot>
+        </div>
+        <div class="slot">
+          <slot name="counter"></slot>
+        </div>
       </div>
     </div>`;
   }

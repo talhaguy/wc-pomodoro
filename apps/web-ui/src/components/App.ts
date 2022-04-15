@@ -52,9 +52,18 @@ export class App extends BaseSmartComponent {
   override render() {
     return html`
       <mt-layout intervalType="FOCUS">
-        <mt-digital-clock seconds=${this._seconds}></mt-digital-clock>
-        <mt-controls activeState=${this._activeState}></mt-controls>
-        <mt-counter count=${this._intervalsCompleted}></mt-counter>
+        <mt-digital-clock
+          slot="clock"
+          seconds=${this._seconds}
+        ></mt-digital-clock>
+        <mt-controls
+          slot="controls"
+          activeState=${this._activeState}
+        ></mt-controls>
+        <mt-counter
+          slot="counter"
+          count=${this._intervalsCompleted}
+        ></mt-counter>
       </mt-layout>
     `;
   }
