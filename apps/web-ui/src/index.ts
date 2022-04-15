@@ -5,3 +5,4 @@ import "./components/DigitalClock";
 import "./components/ActionButton";
 import "./components/Controls";
 import "./components/Counter";
+import "./components/AlertMessage";

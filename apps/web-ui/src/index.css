@@ -4,8 +4,13 @@
   --font-size-body: 1.6rem;
 
   --color-white: #ffffff;
+  --color-black: #000000;
   --color-orange: #ff9f1c;
   --color-blue: #00abe7;
+  --color-red: #fd5e53;
+  --color-yellow: #fbec5d;
+  --color-green: #74c171;
+  --color-gray: #dcdcdc;
 
   font-size: 62.5%;
 }
