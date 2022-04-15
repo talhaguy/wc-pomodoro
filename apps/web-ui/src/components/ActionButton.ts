@@ -33,6 +33,10 @@ export class ActionButton extends LitElement {
         filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
       }
 
+      .btn:disabled {
+        opacity: 0.7;
+      }
+
       img {
         width: 32px;
         height: 32px;
@@ -42,9 +46,27 @@ export class ActionButton extends LitElement {
 
   override render() {
     return html`
-      <button class="btn" ?disabled=${this.disabled} aria-label=${this.label}>
+      <button
+        class="btn"
+        ?disabled=${this.disabled}
+        aria-label=${this.label}
+        @click=${() => {
+          this.dispatchEvent(new ActionButtonClickEvent());
+        }}
+      >
         <img src="${ifDefined(this.imgUrl)}" />
       </button>
     `;
+  }
+}
+
+export class ActionButtonClickEvent extends Event {
+  public static EVENT_NAME = "action-button-click";
+
+  constructor() {
+    super(ActionButtonClickEvent.EVENT_NAME, {
+      bubbles: true,
+      composed: true,
+    });
   }
 }

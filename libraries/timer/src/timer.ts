@@ -26,6 +26,7 @@ export class Timer {
     }
 
     this._timerActiveState = TimerActiveState.active;
+    this._runHandlers(TimerOnEvent.activeStateChange);
 
     this._intervalId = this._timerFns.setInterval(() => {
       this._seconds += 1;
@@ -49,18 +50,17 @@ export class Timer {
     this._timerFns.clearInterval(this._intervalId);
     this._intervalId = null;
     this._timerActiveState = TimerActiveState.paused;
+    this._runHandlers(TimerOnEvent.activeStateChange);
   }
 
   public stop() {
-    if (this._intervalId === null) {
-      console.warn("Timer is not running");
-      return;
+    if (this._intervalId !== null) {
+      this._timerFns.clearInterval(this._intervalId);
     }
-
-    this._timerFns.clearInterval(this._intervalId);
     this._intervalId = null;
     this._seconds = 0;
     this._timerActiveState = TimerActiveState.inactive;
+    this._runHandlers(TimerOnEvent.activeStateChange);
   }
 
   public on(event: TimerOnEvent, handler: Function) {
@@ -84,7 +84,19 @@ export class Timer {
 
   private _runHandlers(event: TimerOnEvent) {
     this._eventHandlers.get(event)?.forEach((handler) => {
-      handler(this._seconds);
+      switch (event) {
+        case TimerOnEvent.tick:
+          handler(this._seconds);
+          break;
+        case TimerOnEvent.complete:
+          handler();
+          break;
+        case TimerOnEvent.activeStateChange:
+          handler(this._timerActiveState);
+          break;
+        default:
+          break;
+      }
     });
   }
 }
@@ -92,6 +104,7 @@ export class Timer {
 export enum TimerOnEvent {
   tick = "TICK",
   complete = "COMPLETE",
+  activeStateChange = "ACTIVE_STATE_CHANGE",
 }
 
 export enum TimerActiveState {

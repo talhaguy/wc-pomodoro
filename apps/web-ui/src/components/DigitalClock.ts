@@ -6,6 +6,7 @@ export class DigitalClock extends LitElement {
   static override styles = css`
     p {
       font-size: 2rem;
+      margin: 0;
     }
   `;
 

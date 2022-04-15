@@ -5,10 +5,13 @@
 
   --color-white: #ffffff;
   --color-orange: #ff9f1c;
+  --color-blue: #00abe7;
 
   font-size: 62.5%;
 }
 
 body {
   font: var(--font-size-body)/1.2 var(--font-primary);
+  color: var(--color-white);
+  margin: 0;
 }
