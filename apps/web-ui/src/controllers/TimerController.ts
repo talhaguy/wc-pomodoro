@@ -1,10 +1,5 @@
 import { ReactiveController, ReactiveControllerHost } from "lit";
-import {
-  PomodoroTimer,
-  TimerActiveState,
-  PomodoroTimerOnEvent,
-  IntervalType,
-} from "timer";
+import { PomodoroTimer, PomodoroTimerOnEvent } from "timer";
 import {
   DataStorage,
   DataStorageNotAvailableError,
@@ -14,10 +9,21 @@ import {
 } from "../services/DataStorage";
 
 export class TimerController implements ReactiveController {
-  public seconds = 0;
-  public activeState = TimerActiveState.inactive;
-  public intervalType: IntervalType = IntervalType.focus;
-  public intervalsCompleted = 0;
+  get seconds() {
+    return this._pomodoroTimer.seconds;
+  }
+
+  get activeState() {
+    return this._pomodoroTimer.activeState;
+  }
+
+  get intervalType() {
+    return this._pomodoroTimer.intervalType;
+  }
+
+  get intervalsCompleted() {
+    return this._pomodoroTimer.focusIntervalsCompleted;
+  }
 
   private _errorCb: (msg: string) => void = () => {};
   private _errorStack: unknown[] = [];
@@ -53,8 +59,7 @@ export class TimerController implements ReactiveController {
       return;
     }
 
-    this.intervalsCompleted = data.numIntervalsCompleted;
-    this._pomodoroTimer.focusIntervalsCompleted = this.intervalsCompleted;
+    this._pomodoroTimer.focusIntervalsCompleted = data.numIntervalsCompleted;
     this._host.requestUpdate();
   }
 
@@ -82,16 +87,11 @@ export class TimerController implements ReactiveController {
     }
   }
 
-  private _onTick = (seconds: number) => {
-    this.seconds = seconds;
+  private _onTick = () => {
     this._host.requestUpdate();
   };
 
-  private _onIntervalComplete = (newInterval: IntervalType) => {
-    this.seconds = 0;
-    this.intervalsCompleted = this._pomodoroTimer.focusIntervalsCompleted;
-    this.intervalType = newInterval;
-
+  private _onIntervalComplete = () => {
     try {
       this._dataStorage.save({
         numIntervalsCompleted: this.intervalsCompleted,
@@ -103,19 +103,11 @@ export class TimerController implements ReactiveController {
     this._host.requestUpdate();
   };
 
-  private _onIntervalSkip = (newInterval: IntervalType) => {
-    this.seconds = 0;
-    this.intervalType = newInterval;
+  private _onIntervalSkip = () => {
     this._host.requestUpdate();
   };
 
-  private _onActiveStateChange = (activeState: TimerActiveState) => {
-    this.activeState = activeState;
-
-    if (this.activeState === TimerActiveState.inactive) {
-      this.seconds = 0;
-    }
-
+  private _onActiveStateChange = () => {
     this._host.requestUpdate();
   };
 
