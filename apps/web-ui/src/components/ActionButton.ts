@@ -41,7 +41,7 @@ export class ActionButton extends LitElement {
         width: 32px;
         height: 32px;
       }
-    `,
+    `
   ];
 
   override render() {
@@ -66,7 +66,7 @@ export class ActionButtonClickEvent extends Event {
   constructor() {
     super(ActionButtonClickEvent.EVENT_NAME, {
       bubbles: true,
-      composed: true,
+      composed: true
     });
   }
 }

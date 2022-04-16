@@ -13,7 +13,7 @@ export class Counter extends LitElement {
         font-size: 1.8rem;
         text-transform: uppercase;
       }
-    `,
+    `
   ];
 
   @property({ type: String })

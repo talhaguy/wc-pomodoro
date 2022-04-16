@@ -22,9 +22,7 @@ export class App extends BaseSmartComponent {
     super.connectedCallback();
 
     this._timerController =
-      this.getContext<(r: ReactiveControllerHost) => TimerController>(
-        TIMER_CONTROLLER
-      )(this);
+      this.getContext<(r: ReactiveControllerHost) => TimerController>(TIMER_CONTROLLER)(this);
   }
 
   protected override firstUpdated(): void {
@@ -38,22 +36,13 @@ export class App extends BaseSmartComponent {
   override render() {
     return html`
       <mt-layout intervalType=${this._timerController.intervalType}>
-        <mt-digital-clock
-          slot="clock"
-          seconds=${this._timerController.seconds}
-        ></mt-digital-clock>
+        <mt-digital-clock slot="clock" seconds=${this._timerController.seconds}></mt-digital-clock>
         <mt-interval-label
           slot="label"
           intervalType=${this._timerController.intervalType}
         ></mt-interval-label>
-        <mt-controls
-          slot="controls"
-          activeState=${this._timerController.activeState}
-        ></mt-controls>
-        <mt-counter
-          slot="counter"
-          count=${this._timerController.intervalsCompleted}
-        ></mt-counter>
+        <mt-controls slot="controls" activeState=${this._timerController.activeState}></mt-controls>
+        <mt-counter slot="counter" count=${this._timerController.intervalsCompleted}></mt-counter>
       </mt-layout>
 
       <mt-alert-message

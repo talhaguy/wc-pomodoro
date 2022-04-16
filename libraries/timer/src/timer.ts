@@ -89,13 +89,13 @@ export class Timer extends EventHandler<TimerOnEvent> {
 export enum TimerOnEvent {
   tick = "TICK",
   complete = "COMPLETE",
-  activeStateChange = "ACTIVE_STATE_CHANGE",
+  activeStateChange = "ACTIVE_STATE_CHANGE"
 }
 
 export enum TimerActiveState {
   active = "ACTIVE",
   inactive = "INACTIVE",
-  paused = "PAUSED",
+  paused = "PAUSED"
 }
 
 export interface TimerFns {

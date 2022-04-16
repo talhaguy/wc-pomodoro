@@ -26,7 +26,7 @@ export class Counter extends LitElement {
       li + li {
         margin-left: 5px;
       }
-    `,
+    `
   ];
 
   @property({ type: Number })

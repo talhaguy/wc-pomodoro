@@ -37,9 +37,7 @@ export class Layout extends BaseSmartComponent {
     this._bodyModifier = this.getContext(BODY_MODIFIER_TOKEN);
   }
 
-  protected override willUpdate(
-    changedProperties: Map<PropertyKey, unknown>
-  ): void {
+  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
     if (!changedProperties.has("intervalType")) {
       return;
     }

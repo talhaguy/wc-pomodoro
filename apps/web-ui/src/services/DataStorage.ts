@@ -25,7 +25,7 @@ export class DataStorage {
 
     if (dataJSON === null) {
       const data = {
-        numIntervalsCompleted: 0,
+        numIntervalsCompleted: 0
       };
       this.save(data);
       return data;

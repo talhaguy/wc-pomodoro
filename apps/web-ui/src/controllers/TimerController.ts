@@ -5,7 +5,7 @@ import {
   DataStorageNotAvailableError,
   DataStorageSaveDataError,
   DataStorageInvalidSaveDataError,
-  SavedData,
+  SavedData
 } from "../services/DataStorage";
 
 export class TimerController implements ReactiveController {
@@ -38,18 +38,9 @@ export class TimerController implements ReactiveController {
 
   hostConnected() {
     this._pomodoroTimer.on(PomodoroTimerOnEvent.tick, this._onTick);
-    this._pomodoroTimer.on(
-      PomodoroTimerOnEvent.intervalComplete,
-      this._onIntervalComplete
-    );
-    this._pomodoroTimer.on(
-      PomodoroTimerOnEvent.intervalSkip,
-      this._onIntervalSkip
-    );
-    this._pomodoroTimer.on(
-      PomodoroTimerOnEvent.activeStateChange,
-      this._onActiveStateChange
-    );
+    this._pomodoroTimer.on(PomodoroTimerOnEvent.intervalComplete, this._onIntervalComplete);
+    this._pomodoroTimer.on(PomodoroTimerOnEvent.intervalSkip, this._onIntervalSkip);
+    this._pomodoroTimer.on(PomodoroTimerOnEvent.activeStateChange, this._onActiveStateChange);
 
     let data: SavedData;
     try {
@@ -65,18 +56,9 @@ export class TimerController implements ReactiveController {
 
   hostDisconnected() {
     this._pomodoroTimer.off(PomodoroTimerOnEvent.tick, this._onTick);
-    this._pomodoroTimer.off(
-      PomodoroTimerOnEvent.intervalComplete,
-      this._onIntervalComplete
-    );
-    this._pomodoroTimer.off(
-      PomodoroTimerOnEvent.intervalSkip,
-      this._onIntervalSkip
-    );
-    this._pomodoroTimer.off(
-      PomodoroTimerOnEvent.activeStateChange,
-      this._onActiveStateChange
-    );
+    this._pomodoroTimer.off(PomodoroTimerOnEvent.intervalComplete, this._onIntervalComplete);
+    this._pomodoroTimer.off(PomodoroTimerOnEvent.intervalSkip, this._onIntervalSkip);
+    this._pomodoroTimer.off(PomodoroTimerOnEvent.activeStateChange, this._onActiveStateChange);
   }
 
   public onError(cb: (msg: string) => void) {
@@ -94,7 +76,7 @@ export class TimerController implements ReactiveController {
   private _onIntervalComplete = () => {
     try {
       this._dataStorage.save({
-        numIntervalsCompleted: this.intervalsCompleted,
+        numIntervalsCompleted: this.intervalsCompleted
       });
     } catch (err) {
       this._handleError(err);
@@ -113,9 +95,7 @@ export class TimerController implements ReactiveController {
 
   private _handleError(err: unknown) {
     if (err instanceof DataStorageNotAvailableError) {
-      this._errorCb(
-        "Your browser does not support local storage or it is full."
-      );
+      this._errorCb("Your browser does not support local storage or it is full.");
     } else if (err instanceof DataStorageSaveDataError) {
       this._errorCb("Your save data could not be saved.");
     } else if (err instanceof DataStorageInvalidSaveDataError) {
@@ -126,10 +106,7 @@ export class TimerController implements ReactiveController {
   }
 }
 
-export function createReactiveTimerController(
-  pomodoroTimer: PomodoroTimer,
-  dataStorage: DataStorage
-) {
+export function createReactiveTimerController(pomodoroTimer: PomodoroTimer, dataStorage: DataStorage) {
   return (host: ReactiveControllerHost) => {
     return new TimerController(host, pomodoroTimer, dataStorage);
   };

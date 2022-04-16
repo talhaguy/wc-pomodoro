@@ -57,7 +57,7 @@ export class AlertMessage extends BaseSmartComponent {
             message: true,
             info: this.type === "info",
             error: this.type === "error",
-            success: this.type === "success",
+            success: this.type === "success"
           })}
         >
           ${this.message}

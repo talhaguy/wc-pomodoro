@@ -7,17 +7,13 @@ export abstract class BaseProvider extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.addEventListener(GetContextEvent.EVENT_NAME, (e) =>
-      this._handleGetContext(e as GetContextEvent)
-    );
+    this.addEventListener(GetContextEvent.EVENT_NAME, (e) => this._handleGetContext(e as GetContextEvent));
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this.removeEventListener(GetContextEvent.EVENT_NAME, (e) =>
-      this._handleGetContext(e as GetContextEvent)
-    );
+    this.removeEventListener(GetContextEvent.EVENT_NAME, (e) => this._handleGetContext(e as GetContextEvent));
   }
 
   public override render() {

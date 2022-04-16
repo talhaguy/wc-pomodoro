@@ -19,10 +19,7 @@ export class Provider extends BaseProvider {
       [POMODORO_TIMER_TOKEN, pomodoroTimer],
       [BODY_MODIFIER_TOKEN, createBodyModifier()],
       [DATA_STORAGE_TOKEN, dataStorage],
-      [
-        TIMER_CONTROLLER,
-        createReactiveTimerController(pomodoroTimer, dataStorage),
-      ],
+      [TIMER_CONTROLLER, createReactiveTimerController(pomodoroTimer, dataStorage)]
     ]);
   }
 }

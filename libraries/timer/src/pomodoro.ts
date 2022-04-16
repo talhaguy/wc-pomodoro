@@ -6,7 +6,7 @@ export class PomodoroTimer extends EventHandler<PomodoroTimerOnEvent> {
   private _intervalTypeSeconds: Map<IntervalType, number> = new Map([
     [IntervalType.focus, 5],
     [IntervalType.shortBreak, 2],
-    [IntervalType.longBreak, 3],
+    [IntervalType.longBreak, 3]
   ]);
   private _focusIntervalsCompleted = 0;
   private readonly _numFocusIntervalsForLongBreak = 4;
@@ -114,14 +114,14 @@ export class PomodoroTimer extends EventHandler<PomodoroTimerOnEvent> {
 export enum IntervalType {
   focus = "FOCUS",
   shortBreak = "SHORT_BREAK",
-  longBreak = "LONG_BREAK",
+  longBreak = "LONG_BREAK"
 }
 
 export enum PomodoroTimerOnEvent {
   tick = "TICK",
   intervalComplete = "INTERVAL_COMPLETE",
   intervalSkip = "INTERVAL_SKIP",
-  activeStateChange = "ACTIVE_STATE_CHANGE",
+  activeStateChange = "ACTIVE_STATE_CHANGE"
 }
 
 export function getNextInterval(

@@ -7,10 +7,10 @@ export class GetContextEvent extends CustomEvent<{
   constructor(token: Symbol) {
     super(GetContextEvent.EVENT_NAME, {
       detail: {
-        token,
+        token
       },
       bubbles: true,
-      composed: true,
+      composed: true
     });
   }
 }
