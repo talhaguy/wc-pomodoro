@@ -37,7 +37,7 @@ export class App extends BaseSmartComponent {
 
   override render() {
     return html`
-      <mt-layout intervalType="FOCUS">
+      <mt-layout intervalType=${this._timerController.intervalType}>
         <mt-digital-clock
           slot="clock"
           seconds=${this._timerController.seconds}

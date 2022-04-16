@@ -1,5 +1,10 @@
 import { ReactiveController, ReactiveControllerHost } from "lit";
-import { Timer, TimerActiveState, TimerOnEvent } from "timer";
+import {
+  PomodoroTimer,
+  TimerActiveState,
+  PomodoroTimerOnEvent,
+  IntervalType,
+} from "timer";
 import {
   DataStorage,
   DataStorageNotAvailableError,
@@ -11,6 +16,7 @@ import {
 export class TimerController implements ReactiveController {
   public seconds = 0;
   public activeState = TimerActiveState.inactive;
+  public intervalType: IntervalType = IntervalType.focus;
   public intervalsCompleted = 0;
 
   private _errorCb: (msg: string) => void = () => {};
@@ -18,16 +24,26 @@ export class TimerController implements ReactiveController {
 
   constructor(
     private _host: ReactiveControllerHost,
-    private _timer: Timer,
+    private _pomodoroTimer: PomodoroTimer,
     private _dataStorage: DataStorage
   ) {
     this._host.addController(this);
   }
 
   hostConnected() {
-    this._timer.on(TimerOnEvent.tick, this._onTick);
-    this._timer.on(TimerOnEvent.complete, this._onTimerComplete);
-    this._timer.on(TimerOnEvent.activeStateChange, this._onActiveStateChange);
+    this._pomodoroTimer.on(PomodoroTimerOnEvent.tick, this._onTick);
+    this._pomodoroTimer.on(
+      PomodoroTimerOnEvent.intervalComplete,
+      this._onIntervalComplete
+    );
+    this._pomodoroTimer.on(
+      PomodoroTimerOnEvent.intervalSkip,
+      this._onIntervalSkip
+    );
+    this._pomodoroTimer.on(
+      PomodoroTimerOnEvent.activeStateChange,
+      this._onActiveStateChange
+    );
 
     let data: SavedData;
     try {
@@ -38,13 +54,24 @@ export class TimerController implements ReactiveController {
     }
 
     this.intervalsCompleted = data.numIntervalsCompleted;
+    this._pomodoroTimer.focusIntervalsCompleted = this.intervalsCompleted;
     this._host.requestUpdate();
   }
 
   hostDisconnected() {
-    this._timer.off(TimerOnEvent.tick, this._onTick);
-    this._timer.off(TimerOnEvent.complete, this._onTimerComplete);
-    this._timer.off(TimerOnEvent.activeStateChange, this._onActiveStateChange);
+    this._pomodoroTimer.off(PomodoroTimerOnEvent.tick, this._onTick);
+    this._pomodoroTimer.off(
+      PomodoroTimerOnEvent.intervalComplete,
+      this._onIntervalComplete
+    );
+    this._pomodoroTimer.off(
+      PomodoroTimerOnEvent.intervalSkip,
+      this._onIntervalSkip
+    );
+    this._pomodoroTimer.off(
+      PomodoroTimerOnEvent.activeStateChange,
+      this._onActiveStateChange
+    );
   }
 
   public onError(cb: (msg: string) => void) {
@@ -60,9 +87,10 @@ export class TimerController implements ReactiveController {
     this._host.requestUpdate();
   };
 
-  private _onTimerComplete = () => {
+  private _onIntervalComplete = (newInterval: IntervalType) => {
     this.seconds = 0;
-    this.intervalsCompleted += 1;
+    this.intervalsCompleted = this._pomodoroTimer.focusIntervalsCompleted;
+    this.intervalType = newInterval;
 
     try {
       this._dataStorage.save({
@@ -72,6 +100,12 @@ export class TimerController implements ReactiveController {
       this._handleError(err);
     }
 
+    this._host.requestUpdate();
+  };
+
+  private _onIntervalSkip = (newInterval: IntervalType) => {
+    this.seconds = 0;
+    this.intervalType = newInterval;
     this._host.requestUpdate();
   };
 
@@ -101,10 +135,10 @@ export class TimerController implements ReactiveController {
 }
 
 export function createReactiveTimerController(
-  timer: Timer,
+  pomodoroTimer: PomodoroTimer,
   dataStorage: DataStorage
 ) {
   return (host: ReactiveControllerHost) => {
-    return new TimerController(host, timer, dataStorage);
+    return new TimerController(host, pomodoroTimer, dataStorage);
   };
 }

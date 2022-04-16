@@ -24,3 +24,8 @@ body {
 .focus-bg {
   background-color: var(--color-blue);
 }
+
+.short-break-bg,
+.long-break-bg {
+  background-color: var(--color-green);
+}

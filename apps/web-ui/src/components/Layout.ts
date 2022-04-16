@@ -1,5 +1,6 @@
 import { html, css } from "lit";
 import { customElement, property } from "lit/decorators";
+import { IntervalType } from "timer";
 import { BODY_MODIFIER_TOKEN } from "../context/bodyModifier";
 import { BodyModifier } from "../services/BodyModifier";
 import { BaseSmartComponent } from "./BaseSmartComponent";
@@ -26,7 +27,7 @@ export class Layout extends BaseSmartComponent {
   `;
 
   @property({ type: String })
-  public intervalType: string = "";
+  public intervalType: IntervalType = IntervalType.focus;
 
   private _bodyModifier!: BodyModifier;
 
@@ -39,12 +40,26 @@ export class Layout extends BaseSmartComponent {
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
-    if (
-      changedProperties.has("intervalType") &&
-      this.intervalType === "FOCUS"
-    ) {
-      this._bodyModifier.addClass("focus-bg");
+    if (!changedProperties.has("intervalType")) {
+      return;
     }
+
+    let className = "";
+    switch (this.intervalType) {
+      case IntervalType.focus:
+        className = "focus-bg";
+        break;
+      case IntervalType.shortBreak:
+        className = "short-break-bg";
+        break;
+      case IntervalType.longBreak:
+        className = "long-break-bg";
+        break;
+      default:
+        break;
+    }
+
+    this._bodyModifier.addClass(className);
   }
 
   override render() {

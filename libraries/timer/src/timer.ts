@@ -1,12 +1,13 @@
-import { removeItem } from "./util";
+import { EventHandler } from "./eventHandler";
 
-export class Timer {
+export class Timer extends EventHandler<TimerOnEvent> {
   private _intervalId: number | null = null;
   private _seconds = 0;
-  private _eventHandlers: Map<TimerOnEvent, Function[]> = new Map();
   private _timerActiveState: TimerActiveState = TimerActiveState.inactive;
 
-  constructor(private _timerFns: TimerFns) {}
+  constructor(private _timerFns: TimerFns) {
+    super();
+  }
 
   get seconds() {
     return this._seconds;
@@ -66,26 +67,7 @@ export class Timer {
     this._runHandlers(TimerOnEvent.activeStateChange);
   }
 
-  public on(event: TimerOnEvent, handler: Function) {
-    if (!this._eventHandlers.has(event)) {
-      this._eventHandlers.set(event, [handler]);
-      return;
-    }
-
-    const handlers = this._eventHandlers.get(event);
-    handlers?.push(handler);
-  }
-
-  public off(event: TimerOnEvent, handler: Function) {
-    if (!this._eventHandlers.has(event)) {
-      return;
-    }
-
-    const handlers = this._eventHandlers.get(event) as Function[];
-    this._eventHandlers.set(event, removeItem(handlers, handler));
-  }
-
-  private _runHandlers(event: TimerOnEvent) {
+  protected _runHandlers(event: TimerOnEvent) {
     this._eventHandlers.get(event)?.forEach((handler) => {
       switch (event) {
         case TimerOnEvent.tick:

@@ -45,11 +45,6 @@ export class AlertMessage extends BaseSmartComponent {
 
   private _timeoutId: number | undefined;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    console.log("AlertMessage connectedCallback");
-  }
-
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     window.clearTimeout(this._timeoutId);
