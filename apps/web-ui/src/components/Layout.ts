@@ -69,6 +69,9 @@ export class Layout extends BaseSmartComponent {
           <slot name="clock"></slot>
         </div>
         <div class="slot">
+          <slot name="label"></slot>
+        </div>
+        <div class="slot">
           <slot name="controls"></slot>
         </div>
         <div class="slot">

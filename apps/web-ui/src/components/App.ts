@@ -42,6 +42,10 @@ export class App extends BaseSmartComponent {
           slot="clock"
           seconds=${this._timerController.seconds}
         ></mt-digital-clock>
+        <mt-interval-label
+          slot="label"
+          intervalType=${this._timerController.intervalType}
+        ></mt-interval-label>
         <mt-controls
           slot="controls"
           activeState=${this._timerController.activeState}
